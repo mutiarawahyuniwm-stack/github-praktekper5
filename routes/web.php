@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\MahasiswaImportController; 
 
 Route::get('/', function () {
     return view('welcome');
@@ -11,6 +12,11 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+ Route::get( '/mahasiswa/import', [MahasiswaImportController::class, 'create'] )
+        ->name('mahasiswa.import'); 
+    Route::post( '/mahasiswa/import',[MahasiswaImportController::class, 'store'] )
+        ->name('mahasiswa.import.store'); 
 
 Route::middleware('auth')->group(function () {
 
@@ -45,6 +51,7 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/profile', [ProfileController::class, 'destroy'])
         ->name('profile.destroy');
+
 });
 
 require __DIR__.'/auth.php';
